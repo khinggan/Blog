@@ -67,12 +67,37 @@ eig(A − BKC) = ±j；严格稳定。
 > * 虚部不为0，则有振荡
 > * 收敛速度和最小的特征值有关（最小意味着和复数域更接近）。 最小的特征值离复数域（复数轴）越远，收敛速度越快。
 
-### Controllability (4.3)
+### Controlability (4.3, 4.4)
+这里只需要知道Controlablity的两个Theorem就可以了；
+Theorem 1: 
+> ![theorem1](../images/controlablity_theorem_1.png)
+> n 是系统状态的维度，根据A和B组成的T（gamma)的秩判断，该系统是否是完全可控的。
 
-### The Segway Robot (4.4)
+紧接着是Theorem 2:
+> ![theorem2](../images/controlablity_theorem_2.png)
+> CC 则可以对任意特征值pole placement;即可以让系统稳定；
 
 ### Observers (4.5) and Observability (4.6)
+我们的目标是从系统的输出（可以通过传感器测到）得到系统的状态。
+
+Idea is add a observer which input is y, output is estimation of system state, noted as x-hat. 
+![observer](../images/observer.png)
+
+1. observer dynamics x-hat-dot是什么样的？
+答： 这里的模型是：predictor-corrector; x = Aˆx + L(y − Cˆx)x = Aˆx + L(y − Cˆx)
+
+如果我们想让estimation x-hat更接近与系统实际状态x，那么将error e = x - x-hat -> 0，即将e stabilize(稳定化)。
+
+Observablity Theorem 1:
+![CO1](../images/observability_theorem_1.png)
+对于上述系统来说，它是否CO(completely observable, 从输出回复初始状态), omega是满秩的；
+
+![CO2](../images/observability_theorem_2.png)
+如果是CO，那么可以Pole placement；
 
 ### The Separation Principle (4.7)
+将controlablity和observability结合：
+1） u = -Kx， 那么，要稳定状态x，即系统是稳定的；
+2） 但是我们不知道x，只知道x-hat。 假设用x-hat代替x，再稳定error。
 
-### Conclusion
+幸运的是，同时稳定x和e是可以的，用分块矩阵方法。这样，得到一个可控可测的反馈控制系统。
